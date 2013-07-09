@@ -1,0 +1,15 @@
+{
+	"name": "8fact-api-mania",
+	"version": "0.0.1",
+	"dependencies": {
+		"express": "3.3.x",
+		"config-env": "0.1.x",
+		"request": "2.22.x"
+	},
+	"devDependencies": {
+		"open": "0.0.x"
+	},
+	"engines": {
+		"node": ">=0.8.0"
+	}
+}
