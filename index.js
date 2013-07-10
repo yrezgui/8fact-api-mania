@@ -13,9 +13,8 @@ var main = function main(accessToken) {
   app.get('/', function index(req, res){
 
     req.query.limit   = req.query.limit || config.param('default_results_limit');
-    req.query.offset  = req.query.offset || config.param('default_results_limit');
 
-    var url = config.param('facebook_api_endpoint') + config.param('facebook_page') + '/feed?&access_token=' + accessToken;
+    var url = config.param('facebook_api_endpoint') + config.param('facebook_page') + '/feed?fields=type,created_time,link,picture&limit=' + config.param('default_results_limit') + '&access_token=' + accessToken;
 
     request(url, function (error, response, body) {
       res.set('Content-Type', 'application/json');
