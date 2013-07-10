@@ -6,6 +6,8 @@ var config = require('config-env').define('NODE_ENV', function (config) {
   });
   
   config.config('development', {
+    // Facebook Graph API Endpoint
+    facebook_api_endpoint: 'https://graph.facebook.com/'
     // Facebook App Id
     facebook_app_id: '123456789',
     // Facebook App Secret
