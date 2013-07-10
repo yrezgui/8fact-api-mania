@@ -17,8 +17,10 @@ var main = function main(accessToken) {
     var url = config.param('facebook_api_endpoint') + config.param('facebook_page') + '/feed?fields=type,created_time,link,picture&limit=' + config.param('default_results_limit') + '&access_token=' + accessToken;
 
     request(url, function (error, response, body) {
-      res.set('Content-Type', 'application/json');
-      res.send(body);
+      var content = JSON.parse(body);
+      delete content.paging;
+      
+      res.send(content);
     });
   });
 
