@@ -11,7 +11,11 @@ var main = function main(accessToken) {
   var app = module.exports = express();
 
   app.get('/', function index(req, res){
-    
+
+    // Allow cross domain requests
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+
     req.query.limit = req.query.limit || config.param('default_results_limit');
 
     var url = config.param('facebook_api_endpoint') + config.param('facebook_page') + '/feed?fields=type,created_time,link,picture&limit=' + req.query.limit + '&access_token=' + accessToken;
@@ -20,7 +24,13 @@ var main = function main(accessToken) {
       var content = JSON.parse(body);
       delete content.paging;
 
-      res.send(content);
+      for(var i = 0; i < content.data.length; i++) {
+        // Return bigger image size
+        if(content.data[i].type == 'photo')
+          content.data[i].picture = content.data[i].picture.replace('s.png', 'b.png');
+      }
+
+      res.jsonp(content);
     });
   });
 
@@ -29,7 +39,7 @@ var main = function main(accessToken) {
   console.log('\n  listening on port ' + port + '\n');
 
   if(process.env['NODE_ENV'] == 'development') {
-    var open  = require('open');
+    var open = require('open');
     open('http://localhost:' + port);
   }
 };
